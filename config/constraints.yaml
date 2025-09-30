@@ -1,0 +1,122 @@
+# Scheduling Constraints Configuration
+
+# Hard Constraints (Must be satisfied)
+hard_constraints:
+  
+  # No professor can teach two courses at the same time
+  professor_conflict:
+    enabled: true
+    description: "Professor cannot be in multiple places simultaneously"
+    weight: 1000
+    
+  # No room can host two courses at the same time  
+  room_conflict:
+    enabled: true
+    description: "Room cannot host multiple classes simultaneously"
+    weight: 1000
+    
+  # Course must have required room features/equipment
+  room_requirements:
+    enabled: true
+    description: "Room must have all required equipment for the course"
+    weight: 1000
+    
+  # Room capacity must accommodate course enrollment
+  room_capacity:
+    enabled: true
+    description: "Room capacity must be sufficient for course enrollment"
+    weight: 1000
+    
+  # Professor must be available at the scheduled time
+  professor_availability:
+    enabled: true
+    description: "Professor must be available during scheduled time"
+    weight: 1000
+
+# Soft Constraints (Preferred but not mandatory)
+soft_constraints:
+
+  # Prefer professors' preferred time slots
+  professor_preference:
+    enabled: true
+    description: "Schedule during professor's preferred time slots"
+    weight: 50
+    
+  # Minimize gaps in professor's schedule  
+  professor_compactness:
+    enabled: true
+    description: "Minimize gaps between professor's classes"
+    weight: 30
+    
+  # Prefer optimal room utilization
+  room_utilization:
+    enabled: true
+    description: "Prefer rooms with 70-90% capacity utilization"
+    weight: 40
+    
+  # Avoid back-to-back different course types for same professor
+  course_type_variety:
+    enabled: true
+    description: "Avoid scheduling different course types consecutively for same professor"
+    weight: 20
+    
+  # Distribute courses evenly across days
+  daily_distribution:
+    enabled: true
+    description: "Distribute courses evenly across working days"
+    weight: 25
+    
+  # Prefer morning slots for core courses
+  time_preference:
+    enabled: true
+    description: "Schedule core courses in preferred time slots"
+    weight: 35
+    
+  # Same course sessions should be distributed across week
+  course_distribution:
+    enabled: true
+    description: "Distribute multiple sessions of same course across the week"
+    weight: 30
+
+# Constraint-specific settings
+constraint_settings:
+  
+  # Room capacity buffer (percentage)
+  room_capacity_buffer: 10  # Allow 10% under-utilization
+  
+  # Maximum gap between classes for a professor (minutes)
+  max_professor_gap: 120
+  
+  # Preferred time slots (higher priority)
+  preferred_time_ranges:
+    - start: "09:00"
+      end: "12:00"
+      priority: 3
+    - start: "14:00" 
+      end: "16:00"
+      priority: 2
+      
+  # Course type specific constraints
+  course_type_constraints:
+    laboratory:
+      min_duration: 120  # Lab sessions should be at least 2 hours
+      preferred_slots: ["extended"]
+      avoid_last_slot: true
+    lecture:
+      min_duration: 50
+      preferred_slots: ["regular"]
+    tutorial:
+      min_duration: 50
+      can_follow_lecture: true
+
+# Penalty weights for constraint violations
+penalty_weights:
+  hard_constraint_violation: 10000
+  soft_constraint_violation: 1
+  
+# Optimization preferences  
+optimization:
+  minimize_room_changes: true
+  maximize_professor_satisfaction: true
+  balance_daily_load: true
+  prefer_consecutive_slots_same_course: false

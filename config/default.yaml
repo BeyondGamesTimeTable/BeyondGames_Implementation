@@ -1,0 +1,80 @@
+# Default Configuration for Timetable Scheduler
+
+# General Settings
+debug: false
+log_level: "INFO"
+output_format: "json"
+
+# Scheduling Parameters
+max_iterations: 1000
+timeout_seconds: 300
+enable_optimization: true
+parallel_processing: false
+
+# Time Slot Configuration
+working_days:
+  - "monday"
+  - "tuesday" 
+  - "wednesday"
+  - "thursday"
+  - "friday"
+
+time_slots:
+  - id: "mon_0900_1000"
+    day: "monday"
+    start_time: "09:00"
+    end_time: "10:00"
+    slot_type: "regular"
+    priority: 3
+  - id: "mon_1000_1100"
+    day: "monday"
+    start_time: "10:00"
+    end_time: "11:00"
+    slot_type: "regular"
+    priority: 3
+  - id: "mon_1100_1200"
+    day: "monday"
+    start_time: "11:00"
+    end_time: "12:00"
+    slot_type: "regular"
+    priority: 3
+  - id: "mon_1400_1500"
+    day: "monday"
+    start_time: "14:00"
+    end_time: "15:00"
+    slot_type: "regular"
+    priority: 2
+  - id: "mon_1500_1600"
+    day: "monday"
+    start_time: "15:00"
+    end_time: "16:00"
+    slot_type: "regular"
+    priority: 2
+
+# Room Categories
+room_types:
+  classroom:
+    default_capacity: 60
+    required_features: ["projector", "whiteboard"]
+  laboratory:
+    default_capacity: 30
+    required_features: ["computers", "projector", "air_conditioning"]
+  seminar_hall:
+    default_capacity: 100
+    required_features: ["projector", "audio_system", "microphone"]
+
+# Quality Metrics Weights
+quality_weights:
+  time_preference: 0.3
+  professor_preference: 0.25
+  room_suitability: 0.25
+  constraint_satisfaction: 0.2
+
+# Output Settings
+export:
+  include_metadata: true
+  include_statistics: true
+  format_options:
+    excel: true
+    pdf: false
+    csv: true
